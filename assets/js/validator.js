@@ -27,3 +27,42 @@ function validateLoginForm() {
   }
   return true;
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  const addButtons = document.querySelectorAll('.add-to-cart-btn');
+
+  addButtons.forEach((button) => {
+    button.addEventListener('click', function () {
+      const productId = this.getAttribute('data-id');
+
+      fetch('actions/add_to_cart.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ product_id: productId }),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            document.getElementById('cart-count').innerText = data.totalItems;
+
+            const originalText = this.innerText;
+            this.innerText = 'Added!';
+            this.style.backgroundColor = '#10b981';
+            this.style.color = 'white';
+
+            setTimeout(() => {
+              this.innerText = originalText;
+              this.style.backgroundColor = '#0f172a';
+            }, 1500);
+          } else {
+            alert('Error adding item to cart.');
+          }
+        })
+        .catch((error) => {
+          console.error('AJAX Error:', error);
+        });
+    });
+  });
+});

@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 require_once 'includes/db.php';
 
 if (isset($_SESSION['user_id'])) {
@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $message = "Please enter both email and password.";
         $statusClass = "error";
     } else {
-        // Fetch the user from the database
+        
         $stmt = $pdo->prepare("SELECT CustomerID, FirstName, PasswordHash FROM CUSTOMER WHERE Email = ?");
         $stmt->execute([$email]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);

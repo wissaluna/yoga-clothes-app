@@ -3,15 +3,13 @@
 require_once 'includes/db.php';
 
 
-$sql = "SELECT p.ProductID, p.ProductName, p.Description, p.Price, p.StockQuantity, c.CategoryName 
+$sql = "SELECT p.ProductID, p.ProductName, p.Description, p.Price, p.StockQuantity, p.ImageURL, c.CategoryName 
         FROM PRODUCT p
         LEFT JOIN CATEGORY c ON p.CategoryID = c.CategoryID
         ORDER BY p.ProductID DESC";
 
-
 $stmt = $pdo->query($sql);
 $products = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
 
 include 'includes/header.php';
 ?>
@@ -28,21 +26,28 @@ include 'includes/header.php';
         <?php foreach ($products as $product): ?>
             <div class="product-card">
                 
-                <div class="product-category"><?php echo htmlspecialchars($product['CategoryName'] ?? 'Uncategorized'); ?></div>
-                
-                <h3><?php echo htmlspecialchars($product['ProductName']); ?></h3>
-                
-                <div class="product-desc"><?php echo htmlspecialchars($product['Description']); ?></div>
-                
-                <div class="product-footer">
-                    <div class="price">$<?php echo number_format($product['Price'], 2); ?></div>
-                    <div class="stock-status">In Stock: <?php echo $product['StockQuantity']; ?></div>
+                <div class="product-img-container">
+                    <img src="<?php echo htmlspecialchars($product['ImageURL'] ?: 'assets/img/placeholder.jpg'); ?>" 
+                         alt="<?php echo htmlspecialchars($product['ProductName']); ?>">
                 </div>
                 
+                <div class="product-content">
+                    <div class="product-category"><?php echo htmlspecialchars($product['CategoryName'] ?? 'Uncategorized'); ?></div>
+                    
+                    <h3><?php echo htmlspecialchars($product['ProductName']); ?></h3>
+                    
+                    <div class="product-desc"><?php echo htmlspecialchars($product['Description']); ?></div>
+                    
+                    <div class="product-footer">
+                        <div class="price">$<?php echo number_format($product['Price'], 2); ?></div>
+                        <div class="stock-status">In Stock: <?php echo $product['StockQuantity']; ?></div>
+                    </div>
+                    
+                    <button class="add-to-cart-btn" data-id="<?php echo $product['ProductID']; ?>">
+                        Add to Cart
+                    </button>
+                </div>
                 
-                <button class="add-to-cart-btn" data-id="<?php echo $product['ProductID']; ?>">
-                    Add to Cart
-                </button>
             </div>
         <?php endforeach; ?>
     <?php else: ?>
@@ -51,6 +56,5 @@ include 'includes/header.php';
 </div>
 
 <?php 
-
 include 'includes/footer.php'; 
 ?>

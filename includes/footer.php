@@ -9,6 +9,6 @@
     </p>
 </footer>
 
-<script src="assets/js/validation.js"></script>
+<script src="assets/js/validator.js"></script>
 </body>
 </html>

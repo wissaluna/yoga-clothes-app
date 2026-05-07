@@ -1,5 +1,5 @@
 <?php
-// db.php
+
 $host = 'localhost';
 $dbname = 'yoga_db';
 $username = 'root'; 

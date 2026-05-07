@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = trim($_POST['email']);
     $password = $_POST['password'];
 
-    // PHP Server-Side Validation
+    
     if (empty($firstName) || empty($lastName) || empty($email) || empty($password)) {
         $message = "All fields are required.";
         $statusClass = "error";
@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $message = "Email is already registered!";
             $statusClass = "error";
         } else {
-            // SHA-256 Hashing (Rubric Requirement)
+            // SHA-256 Hashing 
             $hashedPassword = hash('sha256', $password);
             $insertStmt = $pdo->prepare("INSERT INTO CUSTOMER (FirstName, LastName, Email, PasswordHash) VALUES (?, ?, ?, ?)");
             

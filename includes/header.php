@@ -25,6 +25,7 @@ if (session_status() === PHP_SESSION_NONE) {
         
         <nav class="main-nav">
             <a href="index.php" class="nav-link">Shop</a>
+            <a href="about.html" class="nav-link">About Us</a>
             
             <a href="cart.php" class="nav-link cart-link">
                 Cart <span id="cart-count" class="cart-badge"><?php echo isset($_SESSION['cart']) ? array_sum($_SESSION['cart']) : 0; ?></span>
